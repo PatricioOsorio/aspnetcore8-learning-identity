@@ -22,6 +22,28 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+// ========================================
+// Seed
+using (var scope = app.Services.CreateScope())
+{
+  var services = scope.ServiceProvider;
+  var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+  try
+  {
+    var context = services.GetRequiredService<ApplicationDbContext>();
+    var userManager = services.GetRequiredService<UserManager<CustomUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+    await ContextSeed.CreateRolesSeed(roleManager);
+  }
+  catch (Exception ex)
+  {
+    var logger = loggerFactory.CreateLogger<Program>();
+    logger.LogError(ex, "An error occurred seeding the DB.");
+  }
+}
+// ========================================
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
