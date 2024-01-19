@@ -12,3 +12,7 @@ body {
   color: var(--bs-primary);
   border-radius: 0.5rem;
 }
+
+.hidden {
+  visibility: hidden;
+}

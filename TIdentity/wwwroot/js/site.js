@@ -47,9 +47,13 @@ window.addEventListener('scroll', (e) => {
   let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
   let viewportHeight = window.innerHeight;
 
-  scrollTop > viewportHeight
+  console.log(window.pageYOffset)
+
+  scrollTop > viewportHeight / 9
     ? $btnScrollTop.classList.remove('hidden')
     : $btnScrollTop.classList.add('hidden');
+
+
 });
 $btnScrollTop.addEventListener('click', (e) => {
   if (e.target.matches('.scrollTop') || e.target.matches(`.scrollTop *`)) {
