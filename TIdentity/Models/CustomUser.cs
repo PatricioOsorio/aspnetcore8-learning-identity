@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TIdentity.Models
 {
-  public class CustomUser:IdentityUser
+  public class CustomUser : IdentityUser
   {
     [PersonalData]
     [Column(TypeName = "nvarchar(50)")]
