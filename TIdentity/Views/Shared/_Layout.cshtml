@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<CustomUser> SignInManager
+@inject UserManager<CustomUser> UserManager
+
+<!DOCTYPE html>
 <html lang="es" data-bs-theme="dark">
 <head>
   <meta charset="utf-8" />
@@ -37,39 +41,115 @@
 
 </head>
 <body class="d-flex flex-column vh-100">
-  <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-3" data-bs-theme="light">
-      <div class="container-fluid">
-        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TIdentity</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-          <ul class="navbar-nav flex-grow-1">
-            <li class="nav-item">
-              <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </li>
-          </ul>
-          <partial name="_LoginPartial" />
+  @if (!SignInManager.IsSignedIn(User))
+  {
+    <header>
+      <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-primary bg-primary border-bottom box-shadow mb-3" data-bs-theme="dark">
+        <div class="container">
+          <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TIdentity</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                  aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+              <li class="nav-item">
+                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+              </li>
+            </ul>
+            <partial name="_LoginPartial" />
+          </div>
         </div>
-      </div>
-    </nav>
-  </header>
-  <div class="flex-shrink-0">
-    <main role="main" class="container">
-      @RenderBody()
-    </main>
-  </div>
-
-  <footer class="d-block mt-auto py-5 bg-light-subtle">
-    <div class="container">
-      &copy; 2024 - TIdentity - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+      </nav>
+    </header>
+    <div class="flex-shrink-0">
+      <main role="main" class="container">
+        @RenderBody()
+      </main>
     </div>
-  </footer>
+
+    <footer class="d-block mt-auto py-5 bg-body-tertiary">
+      <div class="container">
+        &copy; 2024 - TIdentity - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+      </div>
+    </footer>
+  }
+  else
+  {
+    <link rel="stylesheet" href="~/css/sidebar.css" asp-append-version="true" />
+
+    <div id="body-pd">
+      <header class="header" id="header">
+        <div class="header_toggle">
+          <i class="bx bx-menu" id="header-toggle"></i>
+        </div>
+        <a class="header_img" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+          <img src="~/images/avatar.png" alt="" />
+        </a>
+      </header>
+
+      <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+          <div>
+            <a class="nav_logo" asp-controller="Home" asp-action="Index">
+              <i class="fas fa-school nav_logo-icon"></i>
+              <span class="nav_logo-name">Gestión practicas profesionales</span>
+            </a>
+            <div class="nav_list">
+              <a class="nav_link" asp-controller="Home" asp-action="Index">
+                <i class='fas fa-home nav_icon'></i>
+                <span class="nav_name">Inicio</span>
+              </a>
+
+              @if (User.IsInRole("SUPERADMIN"))
+              {
+                <a class="nav_link" asp-controller="Superadmin" asp-action="ReadRoles">
+                  <i class="fas fa-id-card nav_icon"></i>
+                  <span class="nav_name">Roles</span>
+                </a>
+                <a class="nav_link" asp-controller="Superadmin" asp-action="ReadUsers">
+                  <i class="fas fa-users nav_icon"></i>
+                  <span class="nav_name">Usuarios</span>
+                </a>
+                <a class="nav_link" asp-controller="Superadmin" asp-action="Dashboard">
+                  <i class="fas fa-chart-line nav_icon"></i>
+                  <span class="nav_name">Dashboard</span>
+                </a>
+              }
+              @if (User.IsInRole("SUPERADMIN") || User.IsInRole("ORGANIZACION"))
+              {
+                <a class="nav_link" asp-controller="Organizacion" asp-action="ListCoordinadorOrganizacion">
+                  <i class="fa-solid fa-people-roof nav_icon"></i>
+                  <span class="nav_name">Coordinador organizacion</span>
+                </a>
+                <a class="nav_link" asp-controller="OportunidadesPracticas" asp-action="Index">
+                  <i class="fa-solid fa-briefcase nav_icon"></i>
+                  <span class="nav_name">Oportunidad practicas</span>
+                </a>
+              }
+            </div>
+          </div>
+          <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button type="submit" style="background: none; border:none" class="nav_link">
+              <i class="bx bx-log-out nav_icon"></i>
+              <span class="nav_name">Cerrar sesion</span>
+            </button>
+          </form>
+        </nav>
+      </div>
+
+      <main class="container">
+        @RenderBody()
+      </main>
+    </div>
+  }
+
+  <button class="scrollTop hidden btn-outline-primary">
+    <i class="fa-solid fa-circle-up"></i>
+  </button>
 
   <!-- JQuery -->
   <script src="~/lib/jquery/dist/jquery.min.js"></script>
