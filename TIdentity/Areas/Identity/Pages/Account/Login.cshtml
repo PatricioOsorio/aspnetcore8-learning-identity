@@ -2,11 +2,95 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Iniciar Sesion";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
+<div class="row vh-100 d-flex justify-content-center body-login">
+  <article class="mycard">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="card__content p-5" data-aos="zoom-in">
+
+      <h1 class="text-center mb-4" data-aos="zoom-in" data-aos-delay="300">
+        Iniciar sesion
+      </h1>
+      <form id="account" method="post">
+
+        <!-- Email input -->
+        <div class="form-floating mb-3"
+             data-aos="fade-right"
+             data-aos-delay="300">
+          <input asp-for="Input.Email"
+                 class="form-control"
+                 autocomplete="username"
+                 aria-required="true" />
+          <label asp-for="Input.Email" class="form-label"></label>
+          <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+
+        <!-- Password input -->
+        <div class="form-floating mb-3"
+             data-aos="fade-left"
+             data-aos-delay="300">
+          <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
+          <label asp-for="Input.Password" class="form-label"></label>
+          <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+
+        <!-- Checkbox -->
+        <div data-aos="fade-right"
+             data-aos-delay="300">
+          <div class="checkbox">
+            <label asp-for="Input.RememberMe" class="form-label">
+              <input class="form-check-input" asp-for="Input.RememberMe" />
+              @Html.DisplayNameFor(m => m.Input.RememberMe)
+            </label>
+          </div>
+        </div>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <!-- Submit button -->
+        <button id="login-submit"
+                type="submit"
+                class="btn btn-primary w-100 mx-0 mb-4"
+                data-aos="zoom-in"
+                data-aos-delay="300"
+                data-aos-once="true">
+          <i class="fas fa-sign-in-alt me-1"></i>Iniciar sesion
+        </button>
+
+        <div class="text-center mb-4"
+             data-aos="fade-right"
+             data-aos-delay="300"
+             data-aos-once="true">
+          ¿No tienes cuenta?
+          <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-decoration-none">Registrar</a>
+        </div>
+
+        <div class="text-center mb-4"
+             data-aos="fade-left"
+             data-aos-delay="300"
+             data-aos-once="true">
+          ¿Olvidaste tu contraseña?
+          <a id="forgot-password" asp-page="./ForgotPassword" class="text-decoration-none">Recuperar contraseña</a>
+        </div>
+
+        <div class="text-center mb-4"
+             data-aos="fade-right"
+             data-aos-delay="300"
+             data-aos-once="true">
+          ¿No haz confirmado tu cuenta?
+          <a iid="resend-confirmation" asp-page="./ResendEmailConfirmation" class="text-decoration-none">Reenviar correo de confirmacion</a>
+        </div>
+
+      </form>
+    </div>
+  </article>
+</div>
+
+
+@* <div class="row">
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
@@ -76,7 +160,7 @@
             }
         </section>
     </div>
-</div>
+</div> *@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
