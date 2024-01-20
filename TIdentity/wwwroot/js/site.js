@@ -47,8 +47,6 @@ window.addEventListener('scroll', (e) => {
   let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
   let viewportHeight = window.innerHeight;
 
-  console.log(window.pageYOffset)
-
   scrollTop > viewportHeight / 9
     ? $btnScrollTop.classList.remove('hidden')
     : $btnScrollTop.classList.add('hidden');
@@ -62,4 +60,24 @@ $btnScrollTop.addEventListener('click', (e) => {
       behavior: 'smooth',
     });
   }
+});
+
+// ==================================
+// THEME
+// ==================================
+function changeTheme(theme) {
+  const htmlElement = document.getElementById('mainHtml');
+
+  // Cambia el tema en el elemento html
+  htmlElement.setAttribute('data-bs-theme', theme);
+
+  // Guarda la preferencia del usuario (opcional)
+  localStorage.setItem('theme', theme);
+}
+
+// ==================================
+// AOS
+// ==================================
+document.addEventListener('DOMContentLoaded', (e) => {
+  AOS.init();
 });

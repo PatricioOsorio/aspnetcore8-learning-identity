@@ -5,14 +5,101 @@ body {
 .scrollTop {
   font-size: 2rem;
   position: fixed;
-  bottom: 1rem;
+  bottom: 5rem;
   right: 1rem;
   border: none;
-  background: rgb(255, 255, 255);
+  background: rgb(255, 255, 255,1);
   color: var(--bs-primary);
   border-radius: 0.5rem;
 }
 
 .hidden {
   visibility: hidden;
+}
+
+.btnChangeTheme {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+body-login {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+  background: #ff2e63;
+  background: -moz-linear-gradient( 145deg, #ff2e63 0%, #08d9d6 66%, #252a34 100% );
+  background: -webkit-linear-gradient( 145deg, #ff2e63 0%, #08d9d6 66%, #252a34 100% );
+  background: linear-gradient(145deg, #ff2e63 0%, #08d9d6 66%, #252a34 100%);
+}
+
+.text-gradient {
+  color: #4defa7;
+  background-image: -webkit-linear-gradient(130deg, #2F4858 0%, var(--bs-primary) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;
+  padding: 0;
+}
+
+
+.mycard {
+  align-self: center;
+  width: 500px;
+  height: auto;
+  min-height: 500px;
+  min-width: 500px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card__content {
+  width: inherit;
+  height: inherit;
+  min-width: inherit;
+  min-height: inherit;
+  padding: 2rem;
+  background-color: rgba(var(--bs-body-bg-rgb),0.1);
+  box-shadow: 0 8px 32px 0 rgba(5, 125, 53, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.circle {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(145deg, #e20074, #804A9C);
+  border-radius: 50%;
+  position: absolute;
+  animation: move-up 2s ease-in infinite alternate-reverse;
+}
+
+  .circle:nth-child(1) {
+    top: -25px;
+    left: -25px;
+  }
+
+  .circle:nth-child(2) {
+    bottom: -25px;
+    right: -25px;
+    animation-name: move-down;
+  }
+
+@keyframes move-up {
+  to {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes move-down {
+  to {
+    transform: translateY(20px);
+  }
 }

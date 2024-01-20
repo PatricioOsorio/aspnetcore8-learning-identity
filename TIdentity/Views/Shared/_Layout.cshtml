@@ -3,7 +3,7 @@
 @inject UserManager<CustomUser> UserManager
 
 <!DOCTYPE html>
-<html lang="es" data-bs-theme="dark">
+<html lang="es" data-bs-theme="light" id="mainHtml">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,11 +15,6 @@
   <!-- My styles -->
   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
   @* <link rel="stylesheet" href="~/TIdentity.styles.css" asp-append-version="true" /> *@
-
-  <!-- Google fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Boxicons Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
@@ -44,7 +39,7 @@
   @if (!SignInManager.IsSignedIn(User))
   {
     <header>
-      <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-primary bg-primary border-bottom box-shadow mb-3" data-bs-theme="dark">
+      <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-primary bg-primary box-shadow mb-3" data-bs-theme="dark">
         <div class="container">
           <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TIdentity</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -151,6 +146,16 @@
     <i class="fa-solid fa-circle-up"></i>
   </button>
 
+  <div class="btn-group btnChangeTheme">
+    <button type="button" id="messageTheme" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+     Tema
+    </button>
+    <ul class="dropdown-menu">
+      <li><button class="dropdown-item" onclick="changeTheme('light')">Claro</button></li>
+      <li><button class="dropdown-item" onclick="changeTheme('dark')">Oscuro</button></li>
+    </ul>
+  </div>
+
   <!-- JQuery -->
   <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
@@ -162,6 +167,15 @@
 
   <!-- My scripts -->
   <script src="~/js/site.js" asp-append-version="true"></script>
+
+  <script>
+    // Aplicar el tema guardado al cargar la página
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme) {
+      const htmlElement = document.getElementById('mainHtml');
+      htmlElement.setAttribute('data-bs-theme', storedTheme);
+    }
+  </script>
 
   @await RenderSectionAsync("Scripts", required: false)
 </body>
