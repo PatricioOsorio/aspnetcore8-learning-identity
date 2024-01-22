@@ -1,0 +1,40 @@
+﻿@model List<Microsoft.AspNetCore.Identity.IdentityRole>
+
+@{
+  ViewData["Title"] = "Roles";
+}
+
+<div class="bg-body rounded mt-4 p-5 shadow-lg">
+  <h1 class="fw-bold text-body-emphasis display-5 mb-3">@ViewData["Title"]</h1>
+
+
+  @if (Model.Any())
+  {
+    <div class="table-responsive">
+      <table id="MyTable" class="table table-striped table-hover table-borderless align-middle text-center">
+        <thead>
+          <tr>
+            <th>Rol</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach (var role in Model)
+          {
+            <tr>
+              <td>@role.Name</td>
+              <td class="d-flex justify-content-center ">
+                <a class="btn btn-warning mx-1 disabled"><i class="fas fa-edit me-1"></i>Editar</a>
+                <a id="AlertaEliminarRol" class="btn btn-danger mx-1 disabled"><i class="fas fa-minus-circle me-1"></i>Eliminar</a>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  else
+  {
+    <p>No existen registros</p>
+  }
+</div>

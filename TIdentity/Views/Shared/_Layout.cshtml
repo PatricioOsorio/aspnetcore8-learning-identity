@@ -33,10 +33,11 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css">
 
   <!-- Datatables -->
-  <link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.css" rel="stylesheet">
+
 
 </head>
-<body class="d-flex flex-column vh-100 bg-body-tertiary">
+<body class="d-flex flex-column vh-100">
   @if (!SignInManager.IsSignedIn(User))
   {
     <header>
@@ -160,11 +161,14 @@
   <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Aos JS -->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" asp-append-version="true"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" asp-append-version="true" async></script>
 
   <!-- Datatables -->
-  <script src="https://cdn.datatables.net/v/bs5/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js" defer ></script>
+  <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.js" defer></script>
 
+  <script src="~/js/datatables.js" asp-append-version="true" defer></script>
 
   <!-- My scripts -->
   <script src="~/js/site.js" asp-append-version="true"></script>
