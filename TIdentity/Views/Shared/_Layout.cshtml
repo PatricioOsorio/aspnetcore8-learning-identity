@@ -92,8 +92,8 @@
         <nav class="nav">
           <div>
             <a class="nav_logo" asp-controller="Home" asp-action="Index">
-              <i class="fas fa-school nav_logo-icon"></i>
-              <span class="nav_logo-name">Gestión practicas profesionales</span>
+              <i class="fa-solid fa-building nav_logo-icon"></i>
+              <span class="nav_logo-name">TIdentity</span>
             </a>
             <div class="nav_list">
               <a class="nav_link" asp-controller="Home" asp-action="Index">
@@ -107,9 +107,9 @@
                   <i class="fas fa-id-card nav_icon"></i>
                   <span class="nav_name">Roles</span>
                 </a>
-                <a class="nav_link" asp-controller="Superadmin" asp-action="ReadUsers">
-                  <i class="fas fa-users nav_icon"></i>
-                  <span class="nav_name">Usuarios</span>
+                <a class="nav_link" asp-controller="Superadmin" asp-action="ReadUserRoles">
+                  <i class="fa-solid fa-address-book"></i>
+                  <span class="nav_name">Roles de usuario</span>
                 </a>
               }
               @*  @if (User.IsInRole("SUPERADMIN") || User.IsInRole("ORGANIZACION"))
@@ -134,7 +134,7 @@
         </nav>
       </div>
 
-      <main class="container">
+      <main class="container mb-5">
         @RenderBody()
       </main>
     </div>

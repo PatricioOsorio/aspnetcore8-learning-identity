@@ -35,6 +35,7 @@ using (var scope = app.Services.CreateScope())
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
     await ContextSeed.CreateRolesSeed(roleManager);
+    await ContextSeed.CreateSuperUser(userManager);
     await ContextSeed.CreateUserSuperadmin(userManager);
     await ContextSeed.CreateUserAdmin(userManager);
     await ContextSeed.CreateUserModerador(userManager);

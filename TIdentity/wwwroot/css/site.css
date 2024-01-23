@@ -21,6 +21,7 @@ body {
   position: fixed;
   bottom: 1rem;
   right: 1rem;
+  z-index: 4 !important;
 }
 
 body-login {
@@ -37,7 +38,7 @@ body-login {
 
 .text-gradient {
   color: #4defa7;
-  background-image: -webkit-linear-gradient(130deg, #2F4858 0%, var(--bs-primary) 100%);
+  background-image: -webkit-linear-gradient(160deg, #2F4858 0%, var(--bs-primary) 100%);
   background-clip: text;
   -webkit-background-clip: text;
   text-fill-color: transparent;
@@ -51,7 +52,7 @@ body-login {
   width: 500px;
   height: auto;
   min-height: 500px;
-  min-width: 500px;
+  min-width: 250px;
   position: relative;
   display: flex;
   justify-content: center;

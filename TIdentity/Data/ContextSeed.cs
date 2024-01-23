@@ -24,6 +24,34 @@ namespace TIdentity.Data
       await roleManager.CreateAsync(new IdentityRole(Roles.BASICO.ToString()));
     }
 
+    public static async Task CreateSuperUser(
+      UserManager<CustomUser> userManager
+    )
+    {
+      //Seed Default User
+      var newUser = new CustomUser()
+      {
+        Nombre = "superuser",
+        ApellidoPaterno = "lastname1",
+        ApellidoMaterno = "lastname2",
+        UserName = "superuser@hotmail.com",
+        Email = "superuser@hotmail.com",
+        EmailConfirmed = true,
+      };
+      if (userManager.Users.All(u => u.Id != newUser.Id))
+      {
+        var user = await userManager.FindByEmailAsync(newUser.Email);
+        if (user == null)
+        {
+          await userManager.CreateAsync(newUser, "Pato123.");
+          await userManager.AddToRoleAsync(newUser, Roles.SUPERADMIN.ToString());
+          await userManager.AddToRoleAsync(newUser, Roles.ADMIN.ToString());
+          await userManager.AddToRoleAsync(newUser, Roles.MODERADOR.ToString());
+          await userManager.AddToRoleAsync(newUser, Roles.BASICO.ToString());
+        }
+      }
+    }
+
     public static async Task CreateUserSuperadmin(
       UserManager<CustomUser> userManager
     )
