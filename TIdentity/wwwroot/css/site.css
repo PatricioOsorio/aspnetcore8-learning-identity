@@ -1,3 +1,13 @@
+:root, [data-bs-theme="light"] {
+  --bd-violet-rgb: 128, 74, 156;
+  --bd-accent-rgb: 255, 228, 132;
+  --bd-pink-rgb: 155, 222, 172;
+}
+
+.bg-chido {
+  background-image: linear-gradient( 180deg, rgba(var(--bs-body-bg-rgb), 0.01), rgba(var(--bs-body-bg-rgb), 1) 85% ), radial-gradient( ellipse at top left, rgba(var(--bs-primary-rgb), 0.5), transparent 50% ), radial-gradient( ellipse at top right, rgba(var(--bd-accent-rgb), 0.5), transparent 50% ), radial-gradient( ellipse at center right, rgba(var(--bd-violet-rgb), 0.5), transparent 50% ), radial-gradient( ellipse at center left, rgba(var(--bd-pink-rgb), 0.5), transparent 50% ) !important;
+}
+
 body {
   font-family: -apple-system,BlinkMacSystemFont,'segoe ui',Roboto,Helvetica,Arial,sans-serif,'apple color emoji','segoe ui emoji','segoe ui symbol' !important;
 }
@@ -5,13 +15,14 @@ body {
 .scrollTop {
   font-size: 2rem;
   position: fixed;
-  bottom: 5rem;
+  bottom: 4rem;
   right: 1rem;
   border: none;
   background: rgb(255, 255, 255,1);
   color: var(--bs-primary);
   border-radius: 0.5rem;
 }
+
 
 .hidden {
   visibility: hidden;
@@ -22,6 +33,25 @@ body {
   bottom: 1rem;
   right: 1rem;
   z-index: 4 !important;
+}
+
+.btn-translucid {
+  background-color: rgba(var(--bs-body-bg-rgb),0.1) !important;
+  box-shadow: 0 8px 32px 0 rgba(5, 125, 53, 0.1) !important;
+  backdrop-filter: blur(15px) !important;
+  -webkit-backdrop-filter: blur(15px) !important;
+  border: 1px solid rgba(var(--bs-body-color-rgb), 0.1) !important;
+  color: var(--bs-body-color) !important;
+}
+
+.translucid.dropdown-menu.show {
+  background-color: rgba(var(--bs-body-bg-rgb),0.1) !important;
+  box-shadow: 0 8px 32px 0 rgba(5, 125, 53, 0.1) !important;
+  backdrop-filter: blur(15px) !important;
+  -webkit-backdrop-filter: blur(15px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border: 1px solid rgba(var(--bs-body-color-rgb), 0.1) !important;
+  color: var(--bs-body-color) !important;
 }
 
 body-login {

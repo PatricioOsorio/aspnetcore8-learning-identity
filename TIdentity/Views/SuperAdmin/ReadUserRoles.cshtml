@@ -1,5 +1,5 @@
 ﻿@* @model List<TIdentity.ViewModels.UserRolesViewModel> *@
-@model IEnumerable<TIdentity.ViewModels.UserRolesViewModel>
+@model IEnumerable<TIdentity.ViewModels.UsersRolesViewModel>
 
 @{
   ViewData["Title"] = "Roles de usuarios";
@@ -13,7 +13,7 @@
   {
     <div class="table-responsive">
       <table id="MyTable" class="table table-striped table-hover table-borderless align-middle text-center">
-        <thead class="table-primary">
+        <thead>
           <tr>
             <th>@Html.DisplayNameFor(model => model.Nombre)</th>
             <th>@Html.DisplayNameFor(model => model.ApellidoPaterno)</th>

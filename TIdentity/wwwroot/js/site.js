@@ -14,13 +14,14 @@ document.addEventListener('DOMContentLoaded', function (event) {
         // show navbar
         nav.classList.toggle('show');
         // change icon
-        toggle.classList.toggle('bx-x');
+        toggle.classList.toggle('fa-xmark');
         // add padding to body
         bodypd.classList.toggle('body-pd');
         // add padding to header
         headerpd.classList.toggle('body-pd');
       });
     }
+
   };
 
   showNavbar('header-toggle', 'nav-bar', 'body-pd', 'header');
@@ -28,13 +29,16 @@ document.addEventListener('DOMContentLoaded', function (event) {
   // Link active
   const linkColor = document.querySelectorAll('.nav_link');
 
-  function colorLink() {
-    if (linkColor) {
-      linkColor.forEach((l) => l.classList.remove('active'));
-      this.classList.add('active');
+  // Obtener la URL actual
+  const currentUrl = window.location.href;
+
+  // Agregar la clase 'active' al enlace correspondiente
+  linkColor.forEach((l) => {
+    const linkUrl = l.getAttribute('href');
+    if (linkUrl && currentUrl.includes(linkUrl)) {
+      l.classList.add('activeAside');
     }
-  }
-  linkColor.forEach((l) => l.addEventListener('click', colorLink));
+  });
 
 });
 
@@ -81,3 +85,110 @@ function changeTheme(theme) {
 document.addEventListener('DOMContentLoaded', (e) => {
   AOS.init();
 });
+
+// ==================================
+// Bootstrap
+// ==================================
+
+
+// ==================================
+// SWEETALERT2
+// ==================================
+
+document.addEventListener('click', (e) => {
+  // Alerta borrar rol
+  if (e.target.matches('#AlertaEliminarRol')) {
+    Swal.fire({
+      title: `¿Eliminar rol: <span class="text-primary">${e.target.dataset.role}</span>?`,
+      text: 'No podrás revertir esto.',
+      icon: 'warning',
+      showCloseButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Sí, bórralo.',
+      cancelButtonText: '¡No, cancelar!',
+      confirmButtonColor: 'var(--bs-danger)',
+      cancelButtonColor: 'var(--bs-secondary)',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          type: 'POST',
+          url: '/Superadmin/DeleteRole',
+          data: { id: e.target.dataset.id },
+          cache: false,
+          success: function (response) {
+            Swal.fire({
+              title: '¡Eliminado!',
+              text: 'El rol ha sido eliminado.',
+              icon: 'success',
+              confirmButtonColor: 'var(--bs-primary)',
+            }).then(function () {
+              location.href = '/Superadmin/ReadRoles';
+            });
+          },
+          error: function (error) {
+            showToast("No es posible eliminar el rol, existen usuarios dentro del rol", "error", 8000)
+          },
+        });
+      }
+    });
+  }
+
+  // Alerta borrar usuario
+  if (e.target.matches('.AlertaEliminarUsuario')) {
+    Swal.fire({
+      title: `¿Eliminar usuario: <span class="text-primary">${e.target.dataset.username}</span>?`,
+      text: 'No podrás revertir esto.',
+      icon: 'warning',
+      showCloseButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Sí, bórralo.',
+      cancelButtonText: '¡No, cancelar!',
+      confirmButtonColor: 'var(--bs-danger)',
+      cancelButtonColor: 'var(--bs-secondary)',
+      background: 'var(--bs-tertiary-bg)',
+      color: 'var(--bs-body-color)'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          type: 'POST',
+          url: '/Superadmin/DeleteUser',
+          data: { id: e.target.dataset.id },
+          cache: false,
+          success: function (response) {
+            Swal.fire({
+              title: '¡Eliminado!',
+              text: 'El usuario ha sido eliminado.',
+              icon: 'success',
+              confirmButtonColor: 'var(--bs-primary)',
+            }).then(function () {
+              location.href = '/Superadmin/ReadUsers';
+            });
+          },
+        });
+      }
+    });
+  }
+});
+
+// ==================================
+// TOAST
+// ==================================
+const showToast = (message, icon = 'success', time = 3000) => {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    showCloseButton: true,
+    timer: time,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    },
+  });
+
+  Toast.fire({
+    icon: icon,
+    title: message,
+  });
+};

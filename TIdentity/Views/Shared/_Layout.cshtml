@@ -14,10 +14,6 @@
 
   <!-- My styles -->
   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-  @* <link rel="stylesheet" href="~/TIdentity.styles.css" asp-append-version="true" /> *@
-
-  <!-- Boxicons Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 
   <!-- Icons Fontawesome cdn -->
   <script src="https://kit.fontawesome.com/56d0ffeffa.js"
@@ -33,7 +29,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css">
 
   <!-- Datatables -->
-  <link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/r-2.5.0/datatables.min.css" rel="stylesheet">
 
 
 </head>
@@ -41,7 +37,7 @@
   @if (!SignInManager.IsSignedIn(User))
   {
     <header>
-      <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-primary bg-primary box-shadow mb-3" data-bs-theme="dark">
+      <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-primary bg-primary box-shadow" data-bs-theme="dark">
         <div class="container">
           <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TIdentity</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -62,8 +58,8 @@
         </div>
       </nav>
     </header>
-    <div class="flex-shrink-0">
-      <main role="main" class="container">
+    <div class="flex-shrink-0 h-100">
+      <main role="main" class="container-fluid">
         @RenderBody()
       </main>
     </div>
@@ -78,10 +74,11 @@
   {
     <link rel="stylesheet" href="~/css/sidebar.css" asp-append-version="true" />
 
-    <div id="body-pd">
+    <div id="body-pd" class="flex-shrink-0">
       <header class="header" id="header">
         <div class="header_toggle">
-          <i class="bx bx-menu" id="header-toggle"></i>
+          <i class="fa-solid fa-bars" id="header-toggle"></i>
+
         </div>
         <a class="header_img" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
           <img src="~/images/avatar.png" alt="" />
@@ -96,13 +93,13 @@
               <span class="nav_logo-name">TIdentity</span>
             </a>
             <div class="nav_list">
-              <a class="nav_link" asp-controller="Home" asp-action="Index">
-                <i class='fas fa-home nav_icon'></i>
-                <span class="nav_name">Inicio</span>
-              </a>
 
               @if (User.IsInRole("SUPERADMIN"))
               {
+                <a class="nav_link" asp-controller="Superadmin" asp-action="ReadUsers">
+                  <i class="fa-solid fa-users"></i>
+                  <span class="nav_name">Usuarios</span>
+                </a>
                 <a class="nav_link" asp-controller="Superadmin" asp-action="ReadRoles">
                   <i class="fas fa-id-card nav_icon"></i>
                   <span class="nav_name">Roles</span>
@@ -111,6 +108,7 @@
                   <i class="fa-solid fa-address-book"></i>
                   <span class="nav_name">Roles de usuario</span>
                 </a>
+
               }
               @*  @if (User.IsInRole("SUPERADMIN") || User.IsInRole("ORGANIZACION"))
             {
@@ -133,22 +131,30 @@
           </form>
         </nav>
       </div>
-
-      <main class="container mb-5">
-        @RenderBody()
-      </main>
     </div>
+    <main role="main" class="container-fluid pt-4">
+      @RenderBody()
+    </main>
+
+    <footer class="d-block mt-auto py-4 text-body-secondary">
+      <div class="container border-top py-3">
+        &copy;
+        <script>document.write(new Date().getFullYear());</script>
+        - TIdentity | <a href="https://www.t-systems.com/mx/es" target="_blank"> T-Systems Mexico S.A. de C.V.</a>
+
+      </div>
+    </footer>
   }
 
-  <button class="scrollTop hidden btn-outline-primary">
+  <button class="scrollTop btn-translucid hidden btn-outline-primary">
     <i class="fa-solid fa-circle-up"></i>
   </button>
 
   <div class="btn-group btnChangeTheme">
-    <button type="button" id="messageTheme" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    <button type="button" id="messageTheme" class="btn btn-primary btn-translucid dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
       Tema
     </button>
-    <ul class="dropdown-menu">
+    <ul class="translucid dropdown-menu">
       <li><button class="dropdown-item" onclick="changeTheme('light')">Claro</button></li>
       <li><button class="dropdown-item" onclick="changeTheme('dark')">Oscuro</button></li>
     </ul>
@@ -165,8 +171,8 @@
 
   <!-- Datatables -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js" defer ></script>
-  <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js" defer></script>
+  <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/r-2.5.0/datatables.min.js" defer></script>
 
   <script src="~/js/datatables.js" asp-append-version="true" defer></script>
 

@@ -16,11 +16,14 @@
   }
   else
   {
-    <li class="nav-item">
+    @* <li class="nav-item">
       <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
+    </li> *@
     <li class="nav-item">
-      <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login">Login</a>
+      <a type="button" class="btn btn-outline-secondary" asp-area="Identity" asp-page="/Account/Login">
+        <i class="fas fa-sign-in-alt mx-2"></i>Iniciar sesion
+      </a>
     </li>
+
   }
 </ul>

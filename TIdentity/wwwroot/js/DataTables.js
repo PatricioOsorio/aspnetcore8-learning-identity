@@ -9,30 +9,45 @@ $(document).ready(function () {
     buttons: {
       buttons: [
         {
+          extend: 'copy',
+          titleAttr: 'Copiar',
+          className: 'btn',
+          text: '<i class="fa-solid fa-copy"></i>',
+          orientation: 'landscape',
+        },
+        {
           extend: 'csv',
           titleAttr: 'Descargar CSV',
-          className: 'btn btn-outline-primary',
+          className: 'btn',
           text: '<i class="fas fa-file-csv"></i>',
           orientation: 'landscape',
         },
         {
           extend: 'pdf',
           titleAttr: 'Descargar PDF',
-          className: 'btn btn-outline-danger',
+          className: 'btn',
           text: '<i class="fas fa-file-pdf"></i>',
           orientation: 'landscape'
         },
         {
           extend: 'excel',
           titleAttr: 'Descargar Excel',
-          className: 'btn btn-outline-success',
+          className: 'btn',
           text: '<i class="fas fa-file-excel"></i>',
           orientation: 'landscape',
         },
+        {
+          extend: 'print',
+          titleAttr: 'Imprimir',
+          className: 'btn',
+          text: '<i class="fa-solid fa-print"></i>',
+          orientation: 'landscape',
+        },
+
       ],
       dom: {
         button: {
-          className: 'btn',
+          className: 'btn btn-secondary',
         },
       },
     },
