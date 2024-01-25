@@ -28,13 +28,6 @@ body {
   visibility: hidden;
 }
 
-.btnChangeTheme {
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  z-index: 4 !important;
-}
-
 .btn-translucid {
   background-color: rgba(var(--bs-body-bg-rgb),0.1) !important;
   box-shadow: 0 8px 32px 0 rgba(5, 125, 53, 0.1) !important;
@@ -44,7 +37,7 @@ body {
   color: var(--bs-body-color) !important;
 }
 
-.translucid.dropdown-menu.show {
+.translucid.dropdown-menu.dropdown-menu-end.shadow {
   background-color: rgba(var(--bs-body-bg-rgb),0.1) !important;
   box-shadow: 0 8px 32px 0 rgba(5, 125, 53, 0.1) !important;
   backdrop-filter: blur(15px) !important;

@@ -110,17 +110,6 @@
                 </a>
 
               }
-              @*  @if (User.IsInRole("SUPERADMIN") || User.IsInRole("ORGANIZACION"))
-            {
-            <a class="nav_link" asp-controller="Organizacion" asp-action="ListCoordinadorOrganizacion">
-            <i class="fa-solid fa-people-roof nav_icon"></i>
-            <span class="nav_name">Coordinador organizacion</span>
-            </a>
-            <a class="nav_link" asp-controller="OportunidadesPracticas" asp-action="Index">
-            <i class="fa-solid fa-briefcase nav_icon"></i>
-            <span class="nav_name">Oportunidad practicas</span>
-            </a>
-            } *@
             </div>
           </div>
           <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
@@ -150,13 +139,31 @@
     <i class="fa-solid fa-circle-up"></i>
   </button>
 
-  <div class="btn-group btnChangeTheme">
-    <button type="button" id="messageTheme" class="btn btn-primary btn-translucid dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-      Tema
+  <!-- Código Razor (HTML) -->
+  <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+    <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (dark)">
+      <i class="fa-solid" id="theme-icon" width="1em" height="1em"></i>
+      <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
     </button>
-    <ul class="translucid dropdown-menu">
-      <li><button class="dropdown-item" onclick="changeTheme('light')">Claro</button></li>
-      <li><button class="dropdown-item" onclick="changeTheme('dark')">Oscuro</button></li>
+    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text" style="">
+      <li>
+        <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+          <i class="fa-solid fa-sun me-1"></i>
+          Claro
+        </button>
+      </li>
+      <li>
+        <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="dark" aria-pressed="true">
+          <i class="fa-solid fa-moon me-1"></i>
+          Oscuro
+        </button>
+      </li>
+      <li>
+        <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="false">
+          <i class="fa-solid fa-circle-half-stroke me-1"></i>
+          Auto
+        </button>
+      </li>
     </ul>
   </div>
 

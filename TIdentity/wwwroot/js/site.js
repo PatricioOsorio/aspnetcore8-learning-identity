@@ -69,15 +69,99 @@ $btnScrollTop.addEventListener('click', (e) => {
 // ==================================
 // THEME
 // ==================================
-function changeTheme(theme) {
-  const htmlElement = document.getElementById('mainHtml');
+//function changeTheme(theme) {
+//  const htmlElement = document.getElementById('mainHtml');
 
-  // Cambia el tema en el elemento html
-  htmlElement.setAttribute('data-bs-theme', theme);
+//  // Cambia el tema en el elemento html
+//  htmlElement.setAttribute('data-bs-theme', theme);
 
-  // Guarda la preferencia del usuario (opcional)
-  localStorage.setItem('theme', theme);
-}
+//  // Guarda la preferencia del usuario (opcional)
+//  localStorage.setItem('theme', theme);
+//}
+document.addEventListener('DOMContentLoaded', function () {
+  // Funciones para obtener y establecer el tema almacenado en el almacenamiento local
+  const getStoredTheme = () => localStorage.getItem('theme');
+  const setStoredTheme = theme => localStorage.setItem('theme', theme);
+
+  // Función para obtener el tema preferido del usuario
+  const getPreferredTheme = () => {
+    const storedTheme = getStoredTheme();
+    if (storedTheme) {
+      return storedTheme;
+    }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  };
+
+  // Función para establecer el tema en el documento
+  const setTheme = theme => {
+    if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-bs-theme', theme);
+    }
+  };
+
+  // Función para mostrar el tema activo en la interfaz
+  const showActiveTheme = (theme, focus = false) => {
+    const themeSwitcher = document.querySelector('#bd-theme');
+    const themeIcon = themeSwitcher.querySelector('.fa-solid');
+
+    if (!themeSwitcher) {
+      return;
+    }
+
+    const themeSwitcherText = document.querySelector('#bd-theme-text');
+    const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`);
+
+    document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+      element.classList.remove('active');
+      element.setAttribute('aria-pressed', 'false');
+    });
+
+    btnToActive.classList.add('active');
+    btnToActive.setAttribute('aria-pressed', 'true');
+    const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`;
+    themeSwitcher.setAttribute('aria-label', themeSwitcherLabel);
+
+    // Actualizar el icono del tema
+    themeIcon.className = 'fa-solid';
+    if (theme === 'dark') {
+      themeIcon.classList.add('fa-moon');
+    } else if (theme === 'light') {
+      themeIcon.classList.add('fa-sun');
+    } else {
+      // Si es auto, usar el icono Auto
+      themeIcon.classList.add('fa-circle-half-stroke')
+    }
+
+    if (focus) {
+      themeSwitcher.focus();
+    }
+  };
+
+  // Evento para cambiar el tema cuando cambia la preferencia del usuario
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    const storedTheme = getStoredTheme();
+    if (storedTheme !== 'light' && storedTheme !== 'dark') {
+      setTheme(getPreferredTheme());
+    }
+  });
+
+  // Obtener el tema inicial y aplicarlo
+  const initialTheme = getStoredTheme() || getPreferredTheme();
+  setTheme(initialTheme);
+  showActiveTheme(initialTheme);
+
+  // Evento de clic para cambiar el tema
+  document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const theme = toggle.getAttribute('data-bs-theme-value');
+      setStoredTheme(theme);
+      setTheme(theme);
+      showActiveTheme(theme, true);
+    });
+  });
+});
 
 // ==================================
 // AOS
