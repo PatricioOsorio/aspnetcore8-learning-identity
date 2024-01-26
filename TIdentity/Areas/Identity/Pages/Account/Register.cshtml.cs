@@ -17,12 +17,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using TIdentity.Data;
 using TIdentity.Models;
 
 namespace TIdentity.Areas.Identity.Pages.Account
 {
+  [Authorize(Roles = "SUPERADMIN")]
   public class RegisterModel : PageModel
   {
     private readonly SignInManager<CustomUser> _signInManager;
@@ -114,6 +118,13 @@ namespace TIdentity.Areas.Identity.Pages.Account
       [Display(Name = "Apellido materno")]
       [Required]
       public string ApellidoMaterno { get; set; }
+
+      [Display(Name = "Rol")]
+      [Required]
+      public string SelectedRole { get; set; }
+
+      public SelectList Roles { get; set; }
+
     }
 
 
@@ -121,6 +132,15 @@ namespace TIdentity.Areas.Identity.Pages.Account
     {
       ReturnUrl = returnUrl;
       ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+      // Obtener la lista de roles y asignarla a la propiedad Roles de InputModel
+      var roles = await _roleManager.Roles.ToListAsync();
+
+      // Inicializar la propiedad Roles en InputModel
+      Input = new InputModel
+      {
+        Roles = new SelectList(roles, nameof(IdentityRole.Name), nameof(IdentityRole.Name))
+      };
     }
 
     public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -141,9 +161,20 @@ namespace TIdentity.Areas.Identity.Pages.Account
         {
           var defaultRole = _roleManager.FindByNameAsync("BASICO").Result;
 
+          // Asigna el rol predeterminado al usuario
           if (defaultRole != null)
           {
-            IdentityResult roleresult = await _userManager.AddToRoleAsync(user, defaultRole.Name);
+            IdentityResult roleResult = await _userManager.AddToRoleAsync(user, defaultRole.Name);
+          }
+
+          // Asigna el rol seleccionado al usuario si se ha seleccionado uno
+          if (!string.IsNullOrEmpty(Input.SelectedRole))
+          {
+            var selectedRole = await _roleManager.FindByNameAsync(Input.SelectedRole);
+            if (selectedRole != null)
+            {
+              await _userManager.AddToRoleAsync(user, selectedRole.Name);
+            }
           }
 
           _logger.LogInformation("User created a new account with password.");
@@ -166,7 +197,12 @@ namespace TIdentity.Areas.Identity.Pages.Account
           }
           else
           {
-            await _signInManager.SignInAsync(user, isPersistent: false);
+            // Establece el mensaje en TempData
+            TempData["SuccessMessage"] = "Your account has been created successfully. Please confirm your email.";
+
+            // No inicia sesión automáticamente, simplemente redirige al returnUrl
+            //await _signInManager.SignInAsync(user, isPersistent: false);
+
             return LocalRedirect(returnUrl);
           }
         }

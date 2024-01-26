@@ -1,8 +1,51 @@
-﻿@{
-    ViewData["Title"] = "Inicio";
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<CustomUser> SignInManager
+@inject UserManager<CustomUser> UserManager
+
+@{
+  ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@if (SignInManager.IsSignedIn(User))
+{
+  <div class="text-center">
+    <h1 class="display-4">Privado</h1>
+  </div>
+
+  <div class="container">
+    <div class="icon-boxes position-relative">
+      <div class="container position-relative">
+        <div class="row gy-4 mt-5">
+
+          <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <a class="icon-box bg-cherry shadow rounded-3 h-100 w-100" href="@Url.Action("ReadUsers", "Superadmin")">
+              <div class="icon"><i class="fa-solid fa-users"></i></div>
+              <h4 class="title"><span>Manejo de usuarios</span></h4>
+            </a>
+          </div>
+
+          <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <a class="icon-box bg-cherry shadow rounded-3 h-100 w-100" href="@Url.Action("ReadRoles", "Superadmin")">
+              <div class="icon"><i class="fas fa-id-card"></i></div>
+              <h4 class="title"><span>Roles</span></h4>
+            </a>
+          </div>
+
+          <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <a class="icon-box bg-cherry shadow rounded-3 h-100 w-100" href="@Url.Action("ReadUserRoles", "Superadmin")">
+              <div class="icon"><i class="fa-solid fa-address-book"></i></div>
+              <h4 class="title"><span>Manejo de roles de usuarios</span></h4>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+}
+else
+{
+  <div class="text-center">
+    <h1 class="display-4">Publico</h1>
+  </div>
+}

@@ -114,7 +114,7 @@
           </div>
           <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button type="submit" style="background: none; border:none" class="nav_link">
-              <i class="bx bx-log-out nav_icon"></i>
+              <i class="fa-solid fa-right-from-bracket nav_icon"></i>
               <span class="nav_name">Cerrar sesion</span>
             </button>
           </form>
@@ -135,17 +135,18 @@
     </footer>
   }
 
+  @* Boton scroll hacia arriba *@
   <button class="scrollTop btn-translucid hidden btn-outline-primary">
     <i class="fa-solid fa-circle-up"></i>
   </button>
 
-  <!-- Código Razor (HTML) -->
-  <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
-    <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (dark)">
+  @* Boton cambio de tema *@
+  <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle z-3">
+    <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center  btn-translucid" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (dark)">
       <i class="fa-solid" id="theme-icon" width="1em" height="1em"></i>
       <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
     </button>
-    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text" style="">
+    <ul class="dropdown-menu dropdown-menu-end shadow translucid" aria-labelledby="bd-theme-text" style="">
       <li>
         <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
           <i class="fa-solid fa-sun me-1"></i>

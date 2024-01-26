@@ -2,7 +2,7 @@
 
 namespace TIdentity.ViewModels
 {
-  public class UserRolesViewModel
+  public class UsersRolesViewModel
   {
     [Display(Name = "Id")]
     public string Id { get; set; }

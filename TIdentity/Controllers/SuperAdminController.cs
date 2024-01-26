@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TIdentity.Data;
 //using TIdentity.Data.Migrations;
@@ -40,11 +41,11 @@ namespace TIdentity.Controllers
     public async Task<IActionResult> ReadUserRoles()
     {
       var users = await _userManager.Users.ToListAsync();
-      var userRolesList = new List<UserRolesViewModel>();
+      var userRolesList = new List<UsersRolesViewModel>();
 
       foreach (var user in users)
       {
-        var userWithRoles = new UserRolesViewModel()
+        var userWithRoles = new UsersRolesViewModel()
         {
           Id = user.Id,
           Email = user.Email,
@@ -79,11 +80,11 @@ namespace TIdentity.Controllers
 
       ViewBag.UserName = user.UserName;
 
-      var model = new List<UserRolesManageViewModel>();
+      var model = new List<UsersRolesManageViewModel>();
 
       foreach (var role in _roleManager.Roles)
       {
-        var userRolesViewModel = new UserRolesManageViewModel
+        var userRolesViewModel = new UsersRolesManageViewModel
         {
           RoleId = role.Id,
           RoleName = role.Name
@@ -102,7 +103,7 @@ namespace TIdentity.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> EditUserRole(List<UserRolesManageViewModel> model, string userId)
+    public async Task<IActionResult> EditUserRole(List<UsersRolesManageViewModel> model, string userId)
     {
       var user = await _userManager.FindByIdAsync(userId);
 
@@ -129,5 +130,118 @@ namespace TIdentity.Controllers
       }
       return RedirectToAction("ReadUserRoles");
     }
+
+    // ==================================
+    // ADMINISTRACION DE USUARIOS
+    // ==================================
+    // Read[GET] - User
+    public async Task<IActionResult> ReadUsers()
+    {
+      return View(await _userManager.Users.ToListAsync());
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteUser(string id)
+    {
+      CustomUser user = await _userManager.FindByIdAsync(id);
+
+      if (user != null)
+      {
+        IdentityResult result = await _userManager.DeleteAsync(user);
+
+        if (result.Succeeded)
+        {
+          return RedirectToAction("ReadUsers");
+        }
+
+        foreach (IdentityError error in result.Errors)
+        {
+          ModelState.AddModelError(string.Empty, error.Description);
+        }
+      }
+
+      return NotFound();
+    }
+
+    
+    // Mostrar formulario para editar un usuario
+    public async Task<IActionResult> EditUser(string id)
+    {
+      CustomUser user = await _userManager.FindByIdAsync(id);
+
+      string selectedRoleId = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+
+      if (user != null)
+      {
+        // Obtener la lista de roles para mostrarla en la vista
+        List<IdentityRole> roles = await _roleManager.Roles.ToListAsync();
+
+        var model = new UserUpdateViewModel
+        {
+          Id = user.Id,
+          Email = user.Email,
+          Nombre = user.Nombre,
+          ApellidoPaterno = user.ApellidoPaterno,
+          ApellidoMaterno = user.ApellidoMaterno,
+          //Roles = roles.Select(r => new SelectListItem { Value = r.Id, Text = r.Name }),
+          //SelectedRoleId = selectedRoleId // Obtener el rol actual del usuario
+        };
+
+        return View(model);
+      }
+
+      return NotFound();
+    }
+
+    // Actualizar un usuario
+    //[HttpPost]
+    //[ValidateAntiForgeryToken]
+    //public async Task<IActionResult> UpdateUser(UpdateUserViewModel viewModel)
+    //{
+    //  if (ModelState.IsValid)
+    //  {
+    //    Users user = await _userManager.FindByIdAsync(viewModel.Id);
+
+    //    if (user != null)
+    //    {
+    //      user.Email = viewModel.Email;
+    //      user.UserName = viewModel.Email;
+    //      user.Nombre = viewModel.Nombre;
+    //      user.ApellidoPaterno = viewModel.ApellidoPaterno;
+    //      user.ApellidoMaterno = viewModel.ApellidoMaterno;
+
+    //      // Actualizar el usuario
+    //      IdentityResult result = await _userManager.UpdateAsync(user);
+
+    //      if (result.Succeeded)
+    //      {
+    //        // Asignar el nuevo rol al usuario
+    //        IdentityRole role = await _roleManager.FindByIdAsync(viewModel.RoleId);
+    //        if (role != null)
+    //        {
+    //          // Remover los roles existentes del usuario
+    //          await _userManager.RemoveFromRolesAsync(user, await _userManager.GetRolesAsync(user));
+
+    //          // Asignar el nuevo rol al usuario
+    //          await _userManager.AddToRoleAsync(user, role.Name);
+    //        }
+
+    //        return RedirectToAction("ReadUsers");
+    //      }
+
+    //      foreach (IdentityError error in result.Errors)
+    //      {
+    //        ModelState.AddModelError(string.Empty, error.Description);
+    //      }
+    //    }
+    //  }
+
+    //  // Obtener la lista de roles nuevamente para volver a mostrarla en caso de error
+    //  List<IdentityRole> roles = await _roleManager.Roles.ToListAsync();
+    //  viewModel.Roles = roles.Select(r => new SelectListItem { Value = r.Id, Text = r.Name });
+
+    //  return View(viewModel);
+    //}
   }
 }

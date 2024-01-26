@@ -1,39 +1,76 @@
-﻿@model List<TIdentity.ViewModels.UsersRolesManageViewModel>
+﻿@model List<UsersRolesManageViewModel>
 
 @{
-  ViewData["Title"] = "Roles de usuario";
+  ViewData["Title"] = "Editar roles de usuario";
 }
 
-<div class="bg-body rounded mt-4 p-5 shadow-lg">
-  <h1 class="fw-bold text-body-emphasis display-6 mb-3 text-gradient">@ViewData["Title"]</h1>
+<div class="container">
 
-  <form method="post">
-    <div class="card border-primary">
-      <div class="card-header text-bg-primary border-primary">
-        <h2>Agregar / quitar roles del usuario: <span class="text-secondary">@ViewBag.UserName</span></h2>
-      </div>
-      <div class="card-body">
-
-        <div class="mb-3">
-          @for (var i = 0; i < Model.Count(); i++)
-          {
-            <div class="form-check form-switch m-1">
-              <input type="checkbox" asp-for="@Model[i].IsSelected" class="form-check-input" />
-              <input type="hidden" asp-for="@Model[i].RoleId" />
-              <input type="hidden" asp-for="@Model[i].RoleName" />
-              <label asp-for="@Model[i].IsSelected" class="form-check-label">
-                @Html.DisplayFor(modelItem => Model[i].RoleName)
-              </label>
-            </div>
-          }
-          <div asp-validation-summary="All" class="text-danger"></div>
-        </div>
-
-        <button type="submit" class="btn btn-warning"><i class="fas fa-edit me-1"></i>Modificar</button>
-        <a asp-controller="SuperAdmin" asp-action="ReadUserRoles" class="btn btn-secondary">
-          <i class="fa-solid fa-ban me-1"></i>Cancelar
-        </a>
-      </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h1 class="text-body-emphasis fw-semibold display-6 text-gradient">@ViewData["Title"]</h1>
     </div>
-  </form>
+    <div class="col-md-6">
+      <nav aria-label="breadcrumb" class="d-md-flex justify-content-end">
+        <ol class="breadcrumb ms-auto p-3 rounded">
+
+          <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")" class="link-body-emphasis">
+              <i class="fa-solid fa-house me-1"></i>Inicio
+            </a>
+          </li>
+
+          <li class="breadcrumb-item">
+            <a href="@Url.Action("ReadUserRoles", "SuperAdmin")" class="link-body-emphasis">
+              <i class="fa-solid fa-address-book me-1"></i>
+              Roles de usuarios
+            </a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            <a>
+              <i class="fas fa-edit me-1"></i>
+              @ViewData["Title"]
+            </a>
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <div class="bg-body-tertiary rounded p-sm-2 p-lg-5">
+    <form method="post">
+      <div class="card border-primary">
+        <div class="card-header text-bg-primary border-primary">
+          <h2>Agregar / quitar roles del usuario: <span class="text-secondary">@ViewBag.UserName</span></h2>
+        </div>
+        <div class="card-body">
+
+          <div class="mb-3">
+            @for (var i = 0; i < Model.Count(); i++)
+            {
+              <div class="form-check form-switch m-1">
+                <input type="checkbox" asp-for="@Model[i].IsSelected" class="form-check-input" />
+                <input type="hidden" asp-for="@Model[i].RoleId" />
+                <input type="hidden" asp-for="@Model[i].RoleName" />
+                <label asp-for="@Model[i].IsSelected" class="form-check-label">
+                  @Html.DisplayFor(modelItem => Model[i].RoleName)
+                </label>
+              </div>
+            }
+            <div asp-validation-summary="All" class="text-danger"></div>
+          </div>
+
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-warning">
+              <i class="fas fa-save me-1"></i>Guardar
+            </button>
+            <a asp-controller="SuperAdmin" asp-action="ReadUserRoles" class="btn btn-light">
+              <i class="fas fa-arrow-left me-1"></i>Regresar
+            </a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
 </div>

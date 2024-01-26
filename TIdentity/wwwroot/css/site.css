@@ -127,3 +127,34 @@ body-login {
     transform: translateY(20px);
   }
 }
+
+.bg-cherry {
+  background: linear-gradient(160deg, var(--bs-secondary) -30%, var(--bs-primary) 90%) !important;
+  color: #fff;
+}
+
+.icon-box {
+  border: none;
+  display: flex;
+  position: relative;
+  padding: 10px 10px;
+  overflow: hidden;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.5s;
+}
+
+  .icon-box:hover {
+    transform: translateY(-1rem);
+  }
+
+  .icon-box .icon {
+    margin-bottom: 20px;
+    padding-top: 10px;
+    display: inline-block;
+    transition: all 0.3s ease-in-out;
+    font-size: 48px;
+    line-height: 1;
+  }

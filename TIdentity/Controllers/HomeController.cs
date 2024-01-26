@@ -18,6 +18,12 @@ namespace TIdentity.Controllers
       return View();
     }
 
+    public IActionResult Private()
+    {
+      return View();
+    }
+
+
     public IActionResult Privacy()
     {
       return View();
