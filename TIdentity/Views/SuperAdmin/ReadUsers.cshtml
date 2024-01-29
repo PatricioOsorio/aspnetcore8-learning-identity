@@ -90,3 +90,13 @@
     <p>No existen registros</p>
   }
 </div>
+
+
+@section Scripts {
+  @if (TempData["SuccessMessage"] != null)
+  {
+    <script>
+      showToast("@TempData["SuccessMessage"]?.ToString()", 'success', 5000);
+    </script>
+  }
+}

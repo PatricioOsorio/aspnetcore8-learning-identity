@@ -69,15 +69,6 @@ $btnScrollTop.addEventListener('click', (e) => {
 // ==================================
 // THEME
 // ==================================
-//function changeTheme(theme) {
-//  const htmlElement = document.getElementById('mainHtml');
-
-//  // Cambia el tema en el elemento html
-//  htmlElement.setAttribute('data-bs-theme', theme);
-
-//  // Guarda la preferencia del usuario (opcional)
-//  localStorage.setItem('theme', theme);
-//}
 document.addEventListener('DOMContentLoaded', function () {
   // Funciones para obtener y establecer el tema almacenado en el almacenamiento local
   const getStoredTheme = () => localStorage.getItem('theme');
@@ -171,52 +162,10 @@ document.addEventListener('DOMContentLoaded', (e) => {
 });
 
 // ==================================
-// Bootstrap
-// ==================================
-
-
-// ==================================
 // SWEETALERT2
 // ==================================
 
 document.addEventListener('click', (e) => {
-  // Alerta borrar rol
-  if (e.target.matches('#AlertaEliminarRol')) {
-    Swal.fire({
-      title: `¿Eliminar rol: <span class="text-primary">${e.target.dataset.role}</span>?`,
-      text: 'No podrás revertir esto.',
-      icon: 'warning',
-      showCloseButton: true,
-      showCancelButton: true,
-      confirmButtonText: 'Sí, bórralo.',
-      cancelButtonText: '¡No, cancelar!',
-      confirmButtonColor: 'var(--bs-danger)',
-      cancelButtonColor: 'var(--bs-secondary)',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        $.ajax({
-          type: 'POST',
-          url: '/Superadmin/DeleteRole',
-          data: { id: e.target.dataset.id },
-          cache: false,
-          success: function (response) {
-            Swal.fire({
-              title: '¡Eliminado!',
-              text: 'El rol ha sido eliminado.',
-              icon: 'success',
-              confirmButtonColor: 'var(--bs-primary)',
-            }).then(function () {
-              location.href = '/Superadmin/ReadRoles';
-            });
-          },
-          error: function (error) {
-            showToast("No es posible eliminar el rol, existen usuarios dentro del rol", "error", 8000)
-          },
-        });
-      }
-    });
-  }
-
   // Alerta borrar usuario
   if (e.target.matches('.AlertaEliminarUsuario')) {
     Swal.fire({
@@ -244,6 +193,8 @@ document.addEventListener('click', (e) => {
               text: 'El usuario ha sido eliminado.',
               icon: 'success',
               confirmButtonColor: 'var(--bs-primary)',
+              background: 'var(--bs-tertiary-bg)',
+              color: 'var(--bs-body-color)'
             }).then(function () {
               location.href = '/Superadmin/ReadUsers';
             });
@@ -265,6 +216,11 @@ const showToast = (message, icon = 'success', time = 3000) => {
     showCloseButton: true,
     timer: time,
     timerProgressBar: true,
+    background: 'var(--bs-tertiary-bg)',
+    color: 'var(--bs-body-color)',
+    customClass: {
+      timerProgressBar: 'customBackgroundToastProgress'
+    },
     didOpen: (toast) => {
       toast.addEventListener('mouseenter', Swal.stopTimer);
       toast.addEventListener('mouseleave', Swal.resumeTimer);

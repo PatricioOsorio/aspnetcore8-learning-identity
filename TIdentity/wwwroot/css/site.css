@@ -158,3 +158,8 @@ body-login {
     font-size: 48px;
     line-height: 1;
   }
+
+
+.customBackgroundToastProgress {
+  background-color: var(--bs-tertiary-color) !important;
+}

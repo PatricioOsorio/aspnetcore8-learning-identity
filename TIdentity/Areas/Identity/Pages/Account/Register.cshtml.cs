@@ -147,6 +147,15 @@ namespace TIdentity.Areas.Identity.Pages.Account
     {
       returnUrl ??= Url.Content("~/");
       ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+      // Obtener la lista de roles y asignarla a la propiedad Roles de InputModel
+      //var roles = await _roleManager.Roles.ToListAsync();
+
+      //// Inicializar la propiedad Roles en InputModel
+      //Input = new InputModel
+      //{
+      //  Roles = new SelectList(roles, nameof(IdentityRole.Name), nameof(IdentityRole.Name))
+      //};
+
       if (ModelState.IsValid)
       {
         //var user = CreateUser();
@@ -198,12 +207,13 @@ namespace TIdentity.Areas.Identity.Pages.Account
           else
           {
             // Establece el mensaje en TempData
-            TempData["SuccessMessage"] = "Your account has been created successfully. Please confirm your email.";
+            TempData["SuccessMessage"] = "La cuenta ha sido creada correctamente, por favor confirme el correo";
 
             // No inicia sesión automáticamente, simplemente redirige al returnUrl
             //await _signInManager.SignInAsync(user, isPersistent: false);
 
-            return LocalRedirect(returnUrl);
+            //return LocalRedirect(returnUrl);
+            return RedirectToAction("ReadUsers", "Superadmin");
           }
         }
         foreach (var error in result.Errors)
